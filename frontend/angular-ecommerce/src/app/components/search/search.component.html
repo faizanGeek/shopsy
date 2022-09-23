@@ -1,0 +1,92 @@
+<!-- <form class="form-header">
+    <input #myInput  type="text"
+      placeholder="Search for data ..."
+      class="au-input au-input-xl" 
+     (keyup.enter)="doSearch(myInput.value)"
+     />
+    <button class="au-btn-submit" type="submit"
+    (click) ="doSearch(myInput.value)"
+    >
+      Search
+    </button>
+  </form> -->
+<button
+  class="navbar-toggler"
+  type="button"
+  data-toggle="collapse"
+  (click)="isCollapsed = !isCollapsed"
+  data-target="#navbarSupportedContent"
+  aria-controls="navbarSupportedContent"
+  aria-expanded="false"
+  aria-label="Toggle navigation"
+>
+  <span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="pages navbar-nav">
+  <div class="home">
+    <div
+      class="collapse navbar-collapse"
+      id="navbarSupportedContent"
+      [ngbCollapse]="isCollapsed"
+    >
+      <a
+        class="nav-link"
+        routerLinkActive="active"
+        routerLink="/"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Home</a
+      >
+    </div>
+  </div>
+
+  <div class="products">
+    <div
+      class="collapse navbar-collapse"
+      id="navbarSupportedContent"
+      [ngbCollapse]="isCollapsed"
+    >
+      <a
+        class="nav-link"
+        routerLinkActive="active"
+        routerLink="/browse"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Products</a
+      >
+    </div>
+  </div>
+
+  <div class="about">
+    <div
+      class="collapse navbar-collapse"
+      id="navbarSupportedContent"
+      [ngbCollapse]="isCollapsed"
+    >
+      <a
+        class="nav-link"
+        routerLinkActive="active"
+        routerLink="/faq"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >About</a
+      >
+    </div>
+  </div>
+</div>
+
+<div class="search navbar-nav">
+  <div
+    class="collapse navbar-collapse"
+    id="navbarSupportedContent"
+    [ngbCollapse]="isCollapsed"
+  >
+    <div class="form-inline search">
+      <input
+        #search
+        class="form-control"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
+    </div>
+  </div>
+</div>

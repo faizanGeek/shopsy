@@ -1,0 +1,71 @@
+<!-- <div class="cart-area d-n">
+    <a routerLink="/cart-details">
+      <div class="total">{{totalPrice}} <span> {{totalQuantity}}</span> </div> <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+    </a>
+  </div> -->
+
+<div class="cart navbar-nav">
+  <!-- <div *ngFor="let e of (cartState | async).errors">
+      <div *ngIf="e.errorEffect == 'FETCH_CART'">
+        <div class="alert-danger">Error</div>
+      </div>
+    </div> -->
+
+  <!-- <div *ngIf="(cartState | async).fetchLoading" class="loader"></div> -->
+  <div ngbDropdown display="dynamic" placement="bottom" autoClose="true">
+    <div id="dropdownCart nav-link" ngbDropdownToggle>
+      <i class="fa fa-shopping-cart"></i>
+      <div class="item-count">
+        {{ totalQuantity }}
+      </div>
+    </div>
+
+    <div ngbDropdownMenu aria-labelledby="dropdownCart" class="cart-inside">
+      <!-- <div *ngIf="(cartState | async).cart && (cartState | async).cart.cartItems.length" class="list-group">
+
+          <div class="product">
+            <a *ngFor="let cartItem of (cartState | async).cart.cartItems" class="row"
+              routerLink="/detail/{{cartItem.url}}">
+              <div class="col-md-4">
+                <div class="color" [ngStyle]="{'background-color': cartItem.color.hex}"></div>
+                <img src="{{cartItem.thumb}}" alt="{{cartItem.name}}">
+              </div>
+              <div class="col-md-8 details">
+                <div class="row">
+                  <div class="col-md-12">
+                    <p class="product-name">{{cartItem.name}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="amount">Amount: <span>{{cartItem.amount}}</span></p>
+                  </div>
+                  <div class="col-md-6">
+                    <p class="price">{{cartItem.price}} €</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+          </div>
+
+          <div class="controls">
+            <div class="row">
+              <div class="col-md-6">
+                <a routerLink="/cart" class="btn">Go to Cart</a>
+              </div>
+              <div class="col-md-6">
+                <button (click)="activatePurchase()" class="btn btn-info">Checkout</button>
+              </div>
+            </div>
+          </div>
+
+
+        </div> -->
+
+      <!-- <div *ngIf="!(cartState | async).cart || !(cartState | async).cart.cartItems.length" class="empty-cart">
+          <p>Your cart is empty.</p>
+        </div> -->
+    </div>
+  </div>
+</div>

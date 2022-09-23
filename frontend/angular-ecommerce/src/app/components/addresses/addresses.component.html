@@ -1,0 +1,216 @@
+<div class="address container">
+  <div class="title">
+    <h1 class="text-center">Shipping Addresses</h1>
+  </div>
+  <hr />
+  <!-- <div *ngIf="innerLoading" class="loader"></div> -->
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div
+          class="card ml-3 mr-3 mb-3"
+          *ngFor="let address of addresses"
+          style="width: 30rem"
+        >
+          <div class="card-body">
+            <h5 class="card-title">{{ address.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              {{ address.contactNumber }}
+            </h6>
+            <p class="card-subtitle mb-2">
+              {{ address.city }} , {{ address.state }}
+            </p>
+            <p class="card-subtitle mb-2">{{ address.pinCode }}</p>
+            <p class="card-subtitle mb-2">{{ address.address }}</p>
+            <a (click)="edit(address)" class="card-link">Edit</a>
+            <a (click)="delete(address)" class="card-link">Delete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="text-center">
+        <button
+          type="button"
+          class="btn btn-info ml-3"
+          *ngIf="!isForm"
+          (click)="isForm = true"
+        >
+          Add Address
+        </button>
+        <button
+          type="button"
+          class="btn btn-info ml-3"
+          *ngIf="isForm"
+          (click)="isForm = false"
+        >
+          Hide Form
+        </button>
+      </div>
+      <div *ngIf="isForm">
+        <form [formGroup]="addressForm" (ngSubmit)="onSubmitAddressForm()">
+          <div class="info">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="name">NAME</label>
+                  <input
+                    type="text"
+                    id="name"
+                    class="form-control"
+                    name="name"
+                    formControlName="name"
+                    value="addressForm.get('name')"
+                    [maxlength]="240"
+                  />
+                  <span
+                    *ngIf="
+                      addressForm.get('name').invalid &&
+                      addressForm.get('name').touched
+                    "
+                  >
+                    <span
+                      *ngIf="addressForm.get('name').errors['required']"
+                      class="alert-danger"
+                      >This field is required!</span
+                    >
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="contactNo">CONTACT NO.</label>
+                  <input
+                    type="text"
+                    id="contactNo"
+                    class="form-control"
+                    name="contactNo"
+                    formControlName="contactNo"
+                    [maxlength]="240"
+                  />
+                  <span
+                    *ngIf="
+                      addressForm.get('contactNo').invalid &&
+                      addressForm.get('contactNo').touched
+                    "
+                  >
+                    <span
+                      *ngIf="addressForm.get('contactNo').errors['required']"
+                      class="alert-danger"
+                      >This field is required!</span
+                    >
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="city">CITY</label>
+                  <input
+                    type="text"
+                    id="city"
+                    class="form-control"
+                    name="city"
+                    formControlName="city"
+                    [maxlength]="240"
+                  />
+                  <span
+                    *ngIf="
+                      addressForm.get('city').invalid &&
+                      addressForm.get('city').touched
+                    "
+                  >
+                    <span
+                      *ngIf="addressForm.get('city').errors['required']"
+                      class="alert-danger"
+                      >This field is required!</span
+                    >
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="state">STATE</label>
+                  <input
+                    type="text"
+                    id="state"
+                    class="form-control"
+                    name="state"
+                    formControlName="state"
+                    [maxlength]="240"
+                  />
+                  <span
+                    *ngIf="
+                      addressForm.get('state').invalid &&
+                      addressForm.get('state').touched
+                    "
+                  >
+                    <span class="alert-danger">Please enter a valid state</span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="zip">ZIP</label>
+                  <input
+                    type="text"
+                    id="zip"
+                    class="form-control"
+                    name="zip"
+                    formControlName="zip"
+                    [maxlength]="6"
+                    [minlength]="5"
+                  />
+                  <span
+                    *ngIf="
+                      addressForm.get('zip').invalid &&
+                      addressForm.get('zip').touched
+                    "
+                    class="alert-danger"
+                  >
+                    Please enter a valid zip number!
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="address">ADDRESS</label>
+                  <textarea
+                    type="text"
+                    id="address"
+                    class="form-control"
+                    name="address"
+                    formControlName="address"
+                    rows="3"
+                  >
+                  </textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row controls">
+            <div class="col-md-12">
+              <button
+                class="btn btn-info"
+                type="submit"
+                [disabled]="addressForm.invalid || addressForm.pending"
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,140 @@
+
+
+<div class="signin container">
+    <div class="title row mt-5">
+      <div class="col-md-8">
+        <p>LOGIN</p>
+        <span>Welcome back to Keyist</span>
+      </div>
+    </div>
+  
+  
+    <div class="form row">
+      <div *ngIf = "loginWithPhone==false" class="col-md-12">
+        <form [formGroup]="signInForm" (ngSubmit)="onSubmitted()">
+          <div class="form-group">
+            <label for="email">EMAIL</label>
+            <input
+              type="text"
+              id="email"
+              class="form-control"
+              name="email"
+              formControlName="email"
+              [maxlength]="240"
+            />
+            <span
+              *ngIf="
+                signInForm.get('email').invalid && signInForm.get('email').touched
+              "
+              class="alert-danger"
+            >
+              Please enter a valid email!
+            </span>
+          </div>
+  
+          <div class="form-group">
+            <label for="password">PASSWORD</label>
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              name="password"
+              formControlName="password"
+              [maxlength]="240"
+            />
+            <span
+              *ngIf="
+                signInForm.get('password').invalid &&
+                signInForm.get('password').touched
+              "
+            >
+              <span
+                *ngIf="signInForm.get('password').errors.required"
+                class="alert-danger"
+                >This field is required!</span
+              >
+              <span
+                *ngIf="signInForm.get('password').errors.minlength"
+                class="alert-danger"
+                >Minimum password length is 6!</span
+              >
+            </span>
+          </div>
+  
+          <div class="forgot row">
+            <div class="col-md-12">
+              <a routerLink="/forgot-password">
+                <p>Forgot your password?</p>
+              </a>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-md-12 mb-3">
+              <button
+                class="btn btn-info"
+                type="submit"
+                [disabled]="signInForm.invalid || signInForm.pending"
+              >
+                Login
+              </button>
+            </div>
+          </div>
+  
+          <div class="signup row">
+            <div class="col-md-12">
+              <a routerLink="/signup">
+                <p>Don't have an account? <span>Sign up!</span></p>
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
+  
+      <!-- Login With Phone -->
+      <div *ngIf = "loginWithPhone == true" class="col-md-12">
+        <form [formGroup]="signInWithPhone" (ngSubmit)="onSubmitFromPhone()">
+          <mat-form-field class="col-12" >
+            <mat-label>Enter your phone No</mat-label>
+            <span matPrefix>+91 &nbsp;</span>
+            <input matInput placeholder="pat@example.com" formControlName="phoneNo" required  [(ngModel)]="signInWithPhone.value.phoneNo" >
+            <button mat-button *ngIf="signInWithPhone.value.phoneNo" matSuffix mat-icon-button aria-label="Clear" (click)="signInWithPhone.value.phoneNo=''">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-error  *ngIf="signInWithPhone.get('phoneNo').invalid && signInWithPhone.get('phoneNo').touched">
+              Please PROVIDE valid phone No.
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field  class="col-12">
+            <mat-label>Enter your Name</mat-label>
+            <input matInput placeholder="pat@example.com" formControlName="name" required [(ngModel)]="signInWithPhone.value.name">
+            <button mat-button *ngIf="signInWithPhone.value.name" matSuffix mat-icon-button aria-label="Clear" (click)="signInWithPhone.value.name=''">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-error  *ngIf="  signInWithPhone.get('name').invalid && signInWithPhone.get('name').touched">
+              Please PROVIDE Valid Name
+            </mat-error>
+          </mat-form-field>
+  
+          <div class="row">
+            <div class="col-md-12 mb-3">
+              <button
+                class="btn btn-info"
+                type="submit"
+                [disabled]="signInWithPhone.invalid || signInWithPhone.pending"
+              >
+                Send an OTP
+              </button>
+            </div>
+          </div>
+  
+        </form>
+      </div>
+  
+      <!-- Login With Phone END -->
+      <button class="w-80" (click)="loginWithPhone = true" mat-raised-button color="primary">Login with phone No.</button>
+  
+    </div>
+  </div>
+  

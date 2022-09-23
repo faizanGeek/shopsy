@@ -1,0 +1,68 @@
+<!-- <div class="login-status-header">
+
+    <div *ngIf="isAuthenticated && userFullName" class="login-status-user-info">
+        Welcome back {{ userFullName }}!
+    </div>
+
+    <button *ngIf="!isAuthenticated" routerLink="/login" class="security-btn">Login</button>
+
+    <button *ngIf="isAuthenticated" (click)="logout()" class="security-btn">Logout</button>
+
+    <button *ngIf="!isAuthenticated" routerLink="/signup" class="security-btn">SignUp</button>
+</div> -->
+
+<div class="login" *ngIf="!isAuthenticated">
+  <a class="nav-link" routerLink="/login">
+    <p>Login</p>
+  </a>
+</div>
+
+<div class="register" *ngIf="!isAuthenticated">
+  <a class="nav-link btn" routerLink="/signup">
+    <p>Sign up</p>
+  </a>
+</div>
+
+<div class="user" *ngIf="isAuthenticated">
+  <div ngbDropdown display="dynamic" placement="bottom" autoClose="true">
+    <a class="nav-link" id="dropdownAccount" ngbDropdownToggle>
+      <i class="fa fa-user"></i>
+    </a>
+    <div
+      class="user-dropdown"
+      ngbDropdownMenu
+      aria-labelledby="dropdownAccount"
+    >
+      <div>
+        <a routerLink="/account/information" routerLinkActive="active">
+          <i class="fa fa-user-o" aria-hidden="true"></i>
+          <p>User Information</p>
+        </a>
+      </div>
+      <div>
+        <a routerLink="/account/orders" routerLinkActive="active">
+          <i class="fa fa-archive" aria-hidden="true"></i>
+          <p>Orders</p>
+        </a>
+      </div>
+      <div>
+        <a routerLink="/account/address" routerLinkActive="active"
+          ><i class="fa fa-home" aria-hidden="true"></i>
+          <p>Address</p>
+        </a>
+      </div>
+      <div>
+        <a routerLink="/account/help" routerLinkActive="active">
+          <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+          <p>Help</p>
+        </a>
+      </div>
+      <div>
+        <a (click)="logout()">
+          <i class="fa fa fa-sign-out" aria-hidden="true"></i>
+          <p>Logout</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

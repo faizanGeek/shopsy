@@ -1,0 +1,166 @@
+<body> 
+    <div class="main">
+        <h1>BITRIX CRM SETTING  </h1>
+       </div>
+       <div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="active bx-tab"  id="ivr_mcs" data-bs-toggle="tab" data-bs-target="#ivr_mcs-cont" type="button" role="tab" aria-controls="ivr_mcs-cont" aria-selected="true">IVR/MCS</button>
+         </li>
+  
+        <li class="nav-item" role="presentation">
+          <button class="bx-tab" id="vc" data-bs-toggle="tab" data-bs-target="#vc-cont"  type="button" role="tab" aria-controls="vc-cont" aria-selected="false">VC</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="bx-tab" id="bulksms" data-bs-toggle="tab" data-bs-target="#bulksms-cont"  type="button" role="tab" aria-controls="bulksms-cont" aria-selected="false">BULK SMS</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="bx-tab" id="whatsapp" data-bs-toggle="tab" data-bs-target="#whatsapp-cont" type="button" role="tab" aria-controls="whatsapp-cont" aria-selected="false">WHATSAPP</button>
+        <li class="nav-item" role="presentation">
+          <button class="bx-tab" id="autodialer" data-bs-toggle="tab" data-bs-target="#autodialer-cont" type="button" role="tab" aria-controls="autodialer-cont" aria-selected="false">AUTO DIALER</button>
+        </li>
+    </ul>
+    
+ <div class="tab-content" id="myTabContent">
+  
+      <div class="tab-pane fade show active" id="ivr_mcs-cont" role="tabpanel" aria-labelledby="ivr_mcs">
+    
+        <?php
+          $dbhost='localhost';
+          $dbname='laravel_db';
+          $dbusername='root';
+          $dbpass='';
+          $con=mysqli_connect($dbhost,$dbusername,$dbpass,$dbname);
+    
+          // Die if connection was not successful
+          if (!$con){
+              die("Sorry we failed to connect: ". mysqli_connect_error());
+          }
+          else{
+              echo "Connection was successful<br>";
+          }
+          $sql = "SELECT * FROM mca_numbers";
+          $result = mysqli_query($con, $sql);
+          if($result != FALSE){
+              // Find the number of records returned
+              $num = mysqli_num_rows($result);
+              echo $num;
+              echo " records found in the DataBase<br>";
+              // Display the rows returned by the sql query
+              if($num> 0){
+                  // We can fetch in a better way using the while loop
+                  while($row = mysqli_fetch_assoc($result)){
+                      // echo var_dump($row);
+                      echo $row['id'] . $row['user_id'] . $row['id'] . $row['number'];
+                      echo "<br>";
+                  }
+              }
+          } else {
+              echo "Error ".mysqli_error($con);
+          }
+        ?>
+      <div>
+                    <td class="guide-td-l">
+    
+                        <div class="guide-btns-wrap">
+                            <span class="bx-button">ACTIVATE TRIAL</span>
+                            
+                        </div>
+                    </td>
+      </div>
+      </div>
+    
+    
+    
+   
+       <div class="tab-pane fade" id="vc-cont" role="tabpanel" aria-labelledby="vc">
+        <form>
+      <input type="checkbox" id="number1" name="number1" value="75759797687">
+      <label for="number1">75759797687</label><br>
+      <input type="checkbox" id="number2" name="number2" value="674586986">
+      <label for="number2">674586986</label><br>
+      <input type="checkbox" id="number3" name="number3" value="6547698">
+      <label for="number3">6547698</label><br><br>
+    </form>
+    <td class="guide-td-l">
+    
+    <div class="guide-btns-wrap">
+                  <span class="bx-button">SUBMIT</span>
+      
+    </div>
+    </td>
+       </div>
+   
+    
+   
+      <div class="tab-pane fade"  id="bulksms-cont" role="tabpanel" aria-labelledby="bulksms">
+        <form>
+      <input type="checkbox" id="number1" name="number1" value="75759797687">
+      <label for="number1">75759797687</label><br>
+      <input type="checkbox" id="number2" name="number2" value="674586986">
+      <label for="number2">674586986</label><br>
+      <input type="checkbox" id="number3" name="number3" value="6547698">
+      <label for="number3">6547698</label><br><br>
+    </form>
+    <td class="guide-td-l">
+    
+    <div class="guide-btns-wrap">
+                  <span class="bx-button">SUBMIT</span>
+      
+    </div>
+    </td>
+    </div>
+   
+    
+      <div class="tab-pane fade" id="whatsapp-cont" role="tabpanel" aria-labelledby="whatsapp">
+      <?php
+    $dbhost='localhost';
+    $dbname='laravel_db';
+    $dbusername='root';
+    $dbpass='';
+    $con=mysqli_connect($dbhost,$dbusername,$dbpass,$dbname);
+    
+    // Die if connection was not successful
+    if (!$con){
+        die("Sorry we failed to connect: ". mysqli_connect_error());
+    }
+    else{
+        echo "Connection was successful<br>";
+    }
+    $sql = "SELECT * FROM whatsapp_logins";
+    $result = mysqli_query($con, $sql);
+    if($result != FALSE){
+        // Find the number of records returned
+        $num = mysqli_num_rows($result);
+        echo $num;
+        echo " records found in the DataBase<br>";
+        // Display the rows returned by the sql query
+        if($num> 0){
+            // We can fetch in a better way using the while loop
+            while($row = mysqli_fetch_assoc($result)){
+                // echo var_dump($row);
+                echo $row['id'] . $row['user_id'] . $row['name'];
+                echo "<br>";
+            }
+        }
+    } else {
+        echo "Error ".mysqli_error($con);
+    }
+    ?>
+    <td class="guide-td-l">
+    
+    <div class="guide-btns-wrap" >
+                  <span class="bx-button">QR CODE</span>
+      
+    </div>
+    </td>
+    
+    </div>
+    
+    
+   
+      <div class="tab-pane fade" id="autodialer-cont" role="tabpanel" aria-labelledby="autodialer">
+    </div>
+  </div>
+    </body>
+    

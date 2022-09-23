@@ -1,0 +1,45 @@
+.address {
+  min-height: 50vh;
+  //	width: 90%;
+  top: 100px;
+  position: relative;
+  .title {
+    margin-top: 20px;
+    font-weight: bold;
+    color: black;
+  }
+  .info {
+    label {
+      font-size: 14px;
+      color: gray;
+      font-weight: bold;
+    }
+
+    input,
+    textarea {
+      border-radius: 10px;
+    }
+
+    textarea {
+      resize: none;
+    }
+  }
+
+  .controls {
+    div {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+
+      button {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        padding-left: 35px;
+        padding-right: 35px;
+        font-size: 14px;
+        border-radius: 10px;
+      }
+    }
+  }
+}

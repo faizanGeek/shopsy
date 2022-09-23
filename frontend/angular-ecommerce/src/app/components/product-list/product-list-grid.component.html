@@ -1,0 +1,245 @@
+<!-- <div class="main-content">
+    <div class="section-content section-content-p30">
+        <div class="container-fluid">
+            <div class="row">
+
+                
+                <div *ngFor="let tempProduct of products" class="col-md-3">
+
+                    <div class="product-box">
+                    <a routerLink="/products/{{tempProduct.id}}">
+                        <img src="{{ tempProduct.imgUrl }}" class="img-responsive">
+                    </a>
+                    <a routerLink="/products/{{tempProduct.id}}">
+                        <h1>{{ tempProduct.name }}</h1>
+                    </a>
+                        <div class="price">{{ tempProduct.unitPrice | currency:'USD' }}</div>
+                        <a (click)="addToCart(tempProduct)" class="btn btn-primary btn-sm">Add to cart</a>
+                    </div>
+
+                </div>
+                <div *ngIf="products?.length==0" class="alert alert-warning col-md-12" role="alert">
+                 No Products Found.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class = "d-flex justify-content-center">
+<nav aria-label="...">
+    <ul class="pagination">
+      <li class="page-item " *ngIf = "pageDetail.pageNo >= 1">
+        <a (click)="pagination(-1)" class="page-link"  tabindex="-1">Previous</a>
+      </li>
+      <li class="page-item" *ngIf = "pageDetail.pageNo >= 1"><a (click)="pagination(-1)" class="page-link">{{pageDetail.pageNo}}</a></li>
+      <li class="page-item active">
+        <a  (click)="pagination(0)" class="page-link" >{{pageDetail.pageNo+1}} <span class="sr-only">{{pageDetail.pageNo}}</span></a>
+      </li>
+      <li class="page-item" *ngIf = "pageDetail.totalPages - pageDetail.pageNo >= 2"><a  (click)="pagination(1)" class="page-link">{{pageDetail.pageNo+2}}</a></li>
+      <li class="page-item" *ngIf = "pageDetail.totalPages - pageDetail.pageNo >= 2">
+        <a  (click)="pagination(1)" class="page-link" >Next</a>
+      </li>
+    </ul>
+  </nav>
+</div> -->
+
+<div class="browse container">
+  <div class="row">
+    <div class="filters col-md-3">
+      <div class="categories">
+        <p>Categories</p>
+        <p
+          *ngIf="selectedCategory !== 'any'"
+          class="remove"
+          (click)="clearCategory()"
+        >
+          remove
+        </p>
+        <div
+          class="category {{
+            selectedCategory === c.categoryName ? 'active' : ''
+          }}"
+          *ngFor="let c of productCategory"
+          (click)="selectCategory(c.id, c.categoryName)"
+        >
+          {{ c.categoryName }}
+        </div>
+        <!-- <div *ngFor="let e of (browseState | async).errors">
+          <div *ngIf="e.errorEffect == 'FETCH_CATEGORY'" class="alert-warning">
+            <div *ngIf="e.error.status === 400 || e.error.status === 401">Problem loading categories...</div>
+            <div *ngIf="e.error.status === 500 || e.error.status === 0 ">Internal server error! Please contact our
+              support team.
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <div class="price">
+        <p>Price</p>
+        <p
+          *ngIf="minPrice !== '0' || maxPrice !== 'undefined'"
+          class="remove"
+          (click)="clearPrice()"
+        >
+          remove
+        </p>
+        <div class="row">
+          <div class="min col-md-4">
+            <p>Min Price</p>
+            <input
+              type="number"
+              min="0"
+              (change)="selectMin($event.target.value)"
+              value="{{ minPrice !== '0' ? minPrice : '' }}"
+            />
+          </div>
+          <div class="max col-md-4">
+            <p>Max Price</p>
+            <input
+              type="number"
+              min="0"
+              (change)="selectMax($event.target.value)"
+              value="{{ maxPrice !== 'undefined' ? maxPrice : '' }}"
+            />
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+      </div>
+      <!-- <div class="color">
+        <p>Color</p>
+        <p *ngIf="selectedColor !== 'any'" class="remove">remove</p>
+        <div>
+          <div  
+            class="active">
+          </div>
+        </div>
+
+      </div> -->
+      <div class="color">
+        <p>Color</p>
+        <p
+          *ngIf="selectedColor !== 'any'"
+          class="remove"
+          (click)="clearColor()"
+        >
+          remove
+        </p>
+        <div>
+          <div
+            *ngFor="let color of colors"
+            [ngStyle]="{ 'background-color': color.hex }"
+            (click)="selectColor(color.name)"
+            class="{{ selectedColor === color.name ? 'active' : '' }}"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <div class="browse-content col-md-9">
+      <!-- <div *ngIf="(browseState | async).loading" class="loader"></div> -->
+      <div class="row">
+        <div class="col-md-6">
+          <p class="product-count">{{ totalNoOfItems }} Product Found</p>
+        </div>
+        <div class="col-md-6">
+          <div class="sort">
+            <select
+              name="sortBy"
+              id="sortBy"
+              (change)="selectSort($event.target.value)"
+            >
+              <option
+                *ngFor="let s of sortBy"
+                [value]="s.value"
+                [selected]="s.value === selectedSort ? true : false"
+              >
+                {{ s.display }}
+              </option>
+            </select>
+          </div>
+
+          <!-- <div *ngFor="let e of (browseState | async).errors">
+            <div *ngIf="e.errorEffect == 'FETCH_PRODUCTS' || e.errorEffect == 'FETCH_PRODUCTS_APPEND'"
+              class="alert-warning col-md-12">
+              <div *ngIf="e.error.status === 400 || e.error.status === 401 ">Problem loading products...</div>
+              <div *ngIf="e.error.status === 500 || e.error.status === 0 ">Internal server error! Please contact our
+                support
+                team.
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <hr />
+      <div class="product row">
+        <div
+          class="product-card col-lg-3 col-md-6 col-6"
+          *ngFor="let product of products"
+        >
+          <img
+            src="{{ product.imgUrl }}"
+            alt="product image"
+            (click)="goToItem(product.id)"
+          />
+          <hr />
+          <p class="product-name" (click)="goToItem(product.id)">
+            {{ product.name }}
+          </p>
+          <div class="row">
+            <div class="col-md-7">
+              <!-- //<div class="product-color" ></div> -->
+              <div *ngIf="product.cartStatus === 'notAdded'">
+                <button
+                  mat-raised-button
+                  (click)="addToCart(product)"
+                  style="color: black"
+                  href="#popup1"
+                >
+                  <i
+                    style="font-size: 1.2em"
+                    class="fa fa-cart-plus"
+                    aria-hidden="true"
+                  >
+                  </i>
+                </button>
+              </div>
+              <div *ngIf="product.cartStatus === 'added'">
+                <button mat-raised-button>
+                  <a style="color: green">
+                    <i class="fa fa-check-circle"> </i>
+                  </a>
+                </button>
+              </div>
+              <simple-notifications></simple-notifications>
+              <!-- <p> <i style="font-size: 1.5em;" class="fa fa-caret-left ml-5px"></i>
+               <span class="mr-2 ml-2">2</span>
+               <i style="font-size: 1.5em;" class="fa fa-caret-right"></i> 
+              </p> -->
+            </div>
+            <div class="col-md-5">
+              <p>{{ product.unitPrice }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="product-not-found"
+          *ngIf="(browseState | async).productsCount === 0 && !(browseState | async).loading">
+          <h1>:(</h1>
+          <h3>Sorry, no product found</h3>
+          <p>Try searching again!</p>
+        </div> -->
+      </div>
+      <div class="row pb-0 pt-5 justify-content-center">
+        <jw-pagination
+          [items]="items"
+          (changePage)="onChangePage($event)"
+          [pageSize]="12"
+        ></jw-pagination>
+      </div>
+
+      <!-- <div *ngIf="!canFetch" class="row">
+        <div class="col-md-12 col-12">
+          <hr>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>

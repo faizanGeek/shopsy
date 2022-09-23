@@ -1,0 +1,189 @@
+<mat-vertical-stepper linear #stepper class="matty">
+  <mat-step [stepControl]="personalForm" errorMessage="Name is required.">
+    <form
+      [formGroup]="personalForm"
+      (ngSubmit)="onSubmitOrderForm($event.submitter.id)"
+    >
+      <ng-template matStepLabel>Shipping Address</ng-template>
+
+      <div *ngFor="let address of addresses">
+        <div class="card">
+          <input
+            type="radio"
+            formControlName="addressId"
+            [(id)]="address.id"
+            [(value)]="address.id"
+            [checked]="10"
+          />
+          <label [(for)]="address.id">
+            {{ address.name }}
+            <i class="fa fa-phone-square ml-2"> {{ address.contactNumber }}</i>
+            <div class="row">
+              <span class="fontSize col-10">{{ address.address }}</span>
+              <span class="fontSize col-10 mt-0"
+                >{{ address.city }}, {{ address.state }}</span
+              >
+            </div>
+          </label>
+        </div>
+      </div>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="newShippingAddress(); $event.preventDefault()"
+      >
+        <i class="fa fa-plus-square mr-2"></i>
+        <span>New Shipping Address </span>
+      </button>
+
+      <div *ngIf="isNewAddress" class="info row">
+        <div class="col-md-12">
+          <mat-form-field class="matty-form-field">
+            <mat-label>Name</mat-label>
+            <input
+              matInput
+              placeholder="Last name, First name"
+              formControlName="shipName"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field class="matty-form-field">
+            <mat-label>Contact No</mat-label>
+            <input
+              matInput
+              placeholder="74172XXXXX"
+              formControlName="phone"
+              [maxlength]="10"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field class="matty-form-field1">
+            <mat-label>CITY</mat-label>
+            <input
+              matInput
+              placeholder="Mumbai"
+              formControlName="city"
+              [maxlength]="10"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field class="matty-form-field">
+            <mat-label>STATE</mat-label>
+            <input
+              matInput
+              placeholder="Maharashtra"
+              formControlName="state"
+              [maxlength]="10"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field class="matty-form-field1">
+            <mat-label>PIN</mat-label>
+            <input
+              matInput
+              placeholder="245101"
+              formControlName="pin"
+              [maxlength]="10"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-md-12">
+          <mat-form-field class="matty-form-field">
+            <mat-label>Address</mat-label>
+            <input
+              matInput
+              placeholder="Last name, First name"
+              formControlName="address"
+              [maxlength]="50"
+            />
+          </mat-form-field>
+        </div>
+
+        <mat-slide-toggle formControlName="isSaveAddress" [(ngModel)]="personalForm.value.isSaveAddress" [color]="color">
+          Save Address
+        </mat-slide-toggle>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-9">
+          <button mat-stroked-button matStepperPrevious color="primary">Back</button>
+
+        </div>
+        <div class="controls col-3">
+          <div class="row">
+            <div class="col-md-6">
+              <button mat-stroked-button matStepperNext color="primary">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step >
+    <ng-template matStepLabel>Order Summary</ng-template>
+    <app-summary (parentFunctionForPrice)="parentFunctionForPrice($event)"
+    (parentFunctionForCartId)="parentFunctionForCartId($event)"
+    ></app-summary>
+    <div class="row mt-5"></div>
+    <div class="row summary-next">
+      <div class="col-9">
+        <button mat-stroked-button matStepperPrevious color="primary">Back</button>
+
+      </div>
+      <div class="controls col-3">
+        <div class="row">
+          <div class="col-md-6">
+            <button mat-stroked-button matStepperNext color="primary">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Confirmation</ng-template>
+    <!-- <div class="col-md-12"> -->
+      <!-- <input type="checkbox" name="terms" id="terms" (change)="termsAccepted = !termsAccepted">
+      <label for="terms">
+        <p>I have read and confirm the terms of service</p>
+      </label>
+      <div class="terms-text" (click)="openTermsModel()">
+        <p>the terms of service.</p>
+      </div> -->
+      <div class="row mt-3">
+     <div class="col-12">
+      <mat-checkbox (change)="termsAccepted = !termsAccepted">
+        <span style="font-size: smaller;">
+        I have read and confirm the terms of service
+      </span>
+      </mat-checkbox>
+    </div>
+      <div class="terms-text col-12" (click)="openTermsModel()">
+        <p class="text-right">Terms of Service.</p>
+      </div>
+    </div>
+    <!-- <button *ngIf="disablePaymentButton" type="button"  class="btn btn-default" (click)="confirmPayment()">Confirm</button> -->
+    <div class="row">
+      <div  class="col-sm-6 mb-3">
+        <button *ngIf = "payOnDelivery" type="button" class="btn btn-success btn-lg btn-width success" (click) ="successPayOnDelivery()"><span class="txt">Pay on Delivery</span>&nbsp;&nbsp;   <i class="fa fa-check-circle"></i></button>    
+    <button type="button" *ngIf = "!payOnDelivery"  [disabled]="!termsAccepted" (click) ="successPayOnDelivery()" class="btn btn-secondary btn-lg btn-width"><span class="txt">Pay on Delivery</span> </button>
+  </div>
+  <div class="col-sm-6 pay-now mb-3">
+    <button *ngIf = "payNow" type="button" class="btn btn-success btn-lg btn-width success" (click) ="successPayNow()"> <span class="txt">Pay Now </span> &nbsp;&nbsp;   <i class="fa fa-check-circle"></i></button>    
+    <button type="button" *ngIf = "!payNow"   [disabled]="!termsAccepted" (click) ="successPayNow()" class="btn btn-info btn-lg btn-width"> <span class="txt">Pay Now </span></button>
+  </div>
+  </div>
+  <div *ngIf="(termsAccepted && (payOnDelivery || payNow ))" class="place-order mb-3">
+  <button mat-raised-button color="primary" class="btn-width" (click)="confirmPayment()" >Place an Order</button>
+</div>
+
+
+    <div>
+      <button mat-stroked-button matStepperPrevious color="primary">Back</button>
+    </div>
+  </mat-step>
+
+</mat-vertical-stepper>

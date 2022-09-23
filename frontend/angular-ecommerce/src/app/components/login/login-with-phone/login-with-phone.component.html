@@ -1,0 +1,63 @@
+<form [formGroup]="signInWithPhone" (ngSubmit)="onSubmitFromPhone()" *ngIf="!otpSent">
+    <mat-form-field class="col-12" >
+      <mat-label>Enter your phone No</mat-label>
+      <span matPrefix>+91 &nbsp;</span>
+      <input matInput placeholder="pat@example.com" formControlName="phoneNo" required  [(ngModel)]="signInWithPhone.value.phoneNo" >
+      <button mat-button *ngIf="signInWithPhone.value.phoneNo" matSuffix mat-icon-button aria-label="Clear" (click)="signInWithPhone.value.phoneNo=''">
+        <mat-icon>close</mat-icon>
+      </button>
+      <!-- <span *ngIf="signInWithPhone.get('phoneNo').invalid && signInWithPhone.get('phoneNo').touched"> -->
+        <mat-error  *ngIf="signInWithPhone.get('phoneNo').errors?.required" >
+          Phone No. is required
+        </mat-error>
+        <mat-error  *ngIf="!signInWithPhone.get('phoneNo').errors?.minLength && !signInWithPhone.get('phoneNo').errors?.maxLength" >
+          10 digit is must
+        </mat-error>
+
+     
+    </mat-form-field>
+
+    <mat-form-field  class="col-12 mt-2">
+      <mat-label>Enter your Name</mat-label>
+      <input matInput placeholder="pat@example.com" formControlName="name" required [(ngModel)]="signInWithPhone.value.name">
+      <button mat-button *ngIf="signInWithPhone.value.name" matSuffix mat-icon-button aria-label="Clear" (click)="signInWithPhone.value.name=''">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error  *ngIf="  signInWithPhone.get('name').invalid && signInWithPhone.get('name').touched">
+        Please PROVIDE Valid Name
+      </mat-error>
+    </mat-form-field>
+ 
+
+    <div class="row mt-2">
+      <div class="col-md-12 mb-3 ml-3 ">
+        <button
+          class="btn btn-info"
+          type="submit"
+          
+          [disabled]="signInWithPhone.invalid || signInWithPhone.pending"
+        >
+          Send an OTP
+        </button>
+      </div>
+    </div>
+
+    <!-- <div class="row"> -->
+
+  </form>
+
+  <div class="otp-sent" *ngIf="otpSent">
+    <p class="ml-3">Please Enter the OTP sent to +91{{this.signInWithPhone.value.phoneNo}}.   <a (click) = "changeNo()" style="cursor: pointer; color: #3498DB;" ><i class="fa fa-pencil-square"> Change </i> </a></p>
+  <div class="otp">
+    <ngx-otp-input  [config]="otpInputConfig" [ngClass] = "otpInputConfig.classList.inputBox" (otpChange)="handeOtpChange($event)" (fill)="handleFillEvent($event)">
+    </ngx-otp-input>
+  </div>
+    <div class="text-right" *ngIf="!isOtpExpired"><p style="font-size: x-small;color: red;"> OTP Expires in  {{counter | formatTime}} </p></div>
+    <div class="text-right" *ngIf="isOtpExpired"><p style="font-size: x-small;color: red;"> OTP Expired <i class="fa fa-frown-o"></i> </p> </div>
+ 
+  <!-- </div> -->
+  <div class="ml-2">
+  <button class="login-button"  mat-raised-button color="primary" [disabled] = "isOtpExpired || !isOtpEntered" (click) = "verifyOtp()">Verify OTP</button>
+</div>
+
+</div>
